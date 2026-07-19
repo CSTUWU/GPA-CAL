@@ -6,7 +6,7 @@ export default function Footer() {
       <div className="max-w-7xl mx-auto px-6 w-full flex flex-col md:flex-row items-center justify-between gap-6">
         {/* Left Section: Logo & Copyright */}
         <div className="flex flex-col gap-2 items-center md:items-start text-center md:text-left">
-          <a href="/" className="flex items-center gap-2 font-heading font-extrabold text-lg text-primary transition-opacity hover:opacity-90">
+          <a href="/" className="flex items-center gap-2 font-heading font-extrabold text-lg text-slate-900 transition-opacity hover:opacity-90">
             <GraduationCap size={24} strokeWidth={2.2} className="text-primary" />
             <span>ScholarCalc</span>
           </a>

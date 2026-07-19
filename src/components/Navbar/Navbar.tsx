@@ -7,8 +7,7 @@ export default function Navbar() {
   return (
     <nav className="sticky top-0 z-50 h-18 border-b border-slate-200 bg-white/90 backdrop-blur-md flex items-center">
       <div className="max-w-7xl mx-auto px-6 w-full flex items-center justify-between">
-        {/* Logo */}
-        <a href="/" className="flex items-center gap-2 font-heading font-extrabold text-xl text-primary transition-opacity hover:opacity-90">
+        <a href="/" className="flex items-center gap-2 font-heading font-extrabold text-xl text-slate-900 transition-opacity hover:opacity-90">
           <GraduationCap size={28} strokeWidth={2.2} className="text-primary" />
           <span>ScholarCalc</span>
         </a>
