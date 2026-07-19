@@ -1,4 +1,5 @@
 import { Play, Sparkles } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export default function Hero() {
   return (
@@ -24,9 +25,9 @@ export default function Hero() {
 
         {/* Buttons */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-          <button className="bg-primary text-white font-semibold text-sm px-7 py-3.5 rounded-lg hover:bg-primary-hover hover:-translate-y-px hover:shadow-lg hover:shadow-primary/20 active:translate-y-0 active:shadow-sm transition-all duration-200 cursor-pointer w-full sm:w-auto">
+          <Link to="/register" className="bg-primary text-white font-semibold text-sm px-7 py-3.5 rounded-lg hover:bg-primary-hover hover:-translate-y-px hover:shadow-lg hover:shadow-primary/20 active:translate-y-0 active:shadow-sm transition-all duration-200 cursor-pointer w-full sm:w-auto text-center">
             Get Started - It's Free
-          </button>
+          </Link>
           <button className="bg-white text-slate-800 border border-slate-200 font-semibold text-sm px-6 py-3.5 rounded-lg hover:bg-slate-50 hover:border-slate-300 hover:-translate-y-px active:translate-y-0 transition-all duration-200 cursor-pointer inline-flex items-center justify-center gap-2 shadow-sm w-full sm:w-auto">
             <span className="w-5 h-5 rounded-full border border-slate-300 flex items-center justify-center mr-0.5">
               <Play size={8} fill="currentColor" className="text-slate-800 translate-x-[0.5px]" />

@@ -1,4 +1,5 @@
 import { ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export default function CTA() {
   return (
@@ -15,15 +16,15 @@ export default function CTA() {
 
         {/* Description */}
         <p className="text-white/80 text-base md:text-[17px] max-w-2xl mx-auto mb-10 leading-relaxed">
-          Join thousands of students and administrators utilizing ScholarCalc to
+          Join thousands of students and administrators utilizing UniMate to
           bring precision to degree management.
         </p>
 
         {/* Button */}
-        <button className="bg-white text-primary border border-white hover:bg-slate-50 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 font-semibold px-7 py-3.5 rounded-lg inline-flex items-center justify-center gap-2 cursor-pointer text-sm">
+        <Link to="/register" className="bg-white text-primary border border-white hover:bg-slate-50 hover:shadow-lg hover:-translate-y-0.5 active:translate-y-0 transition-all duration-200 font-semibold px-7 py-3.5 rounded-lg inline-flex items-center justify-center gap-2 cursor-pointer text-sm">
           <span>Get Started Free</span>
           <ArrowRight size={15} strokeWidth={2.5} />
-        </button>
+        </Link>
       </div>
     </section>
   );
