@@ -31,7 +31,7 @@ export default function Navbar() {
 
         {/* Action Buttons (Desktop) */}
         <div className="hidden md:flex items-center gap-4">
-          <Link to="/register" className="text-slate-600 hover:text-slate-900 font-semibold text-sm px-4 py-2 transition-colors duration-200 cursor-pointer">
+          <Link to="/login" className="text-slate-600 hover:text-slate-900 font-semibold text-sm px-4 py-2 transition-colors duration-200 cursor-pointer">
             Log In
           </Link>
           <Link to="/register" className="bg-primary text-white font-semibold text-sm px-5 py-2.5 rounded-lg hover:bg-primary-hover hover:-translate-y-px hover:shadow-md hover:shadow-primary/25 active:translate-y-0 active:shadow-sm transition-all duration-200 cursor-pointer text-center">
@@ -82,7 +82,7 @@ export default function Navbar() {
           </a>
           <hr className="border-t border-slate-200 my-1" />
           <div className="flex flex-col gap-3">
-            <Link to="/register" className="bg-white text-slate-900 border border-slate-200 font-semibold text-sm px-5 py-2.5 rounded-lg hover:bg-slate-50 transition-all duration-200 cursor-pointer w-full text-center">
+            <Link to="/login" className="bg-white text-slate-900 border border-slate-200 font-semibold text-sm px-5 py-2.5 rounded-lg hover:bg-slate-50 transition-all duration-200 cursor-pointer w-full text-center">
               Log In
             </Link>
             <Link to="/register" className="bg-primary text-white font-semibold text-sm px-5 py-2.5 rounded-lg hover:bg-primary-hover transition-all duration-200 cursor-pointer w-full text-center">
