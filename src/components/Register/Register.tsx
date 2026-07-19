@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { User, Mail, Lock, GraduationCap, ChevronDown, Star, ArrowRight, Calculator } from "lucide-react";
+import { Link } from "react-router-dom";
 
 export default function Register() {
   const [formData, setFormData] = useState({
@@ -256,9 +257,9 @@ export default function Register() {
           <div className="text-center mt-8">
             <span className="text-xs text-slate-400">
               Already have an account?{" "}
-              <a href="/" className="text-primary font-semibold hover:underline">
+              <Link to="/login" className="text-primary font-semibold hover:underline">
                 Log In
-              </a>
+              </Link>
             </span>
           </div>
         </div>
