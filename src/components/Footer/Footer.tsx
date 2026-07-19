@@ -8,10 +8,10 @@ export default function Footer() {
         <div className="flex flex-col gap-2 items-center md:items-start text-center md:text-left">
           <a href="/" className="flex items-center gap-2 font-heading font-extrabold text-lg text-slate-900 transition-opacity hover:opacity-90">
             <GraduationCap size={24} strokeWidth={2.2} className="text-primary" />
-            <span>ScholarCalc</span>
+            <span>UniMate</span>
           </a>
           <p className="text-xs md:text-sm text-slate-400">
-            &copy; 2024 ScholarCalc. Precision in Academic Excellence.
+            &copy; 2024 UniMate. Precision in Academic Excellence.
           </p>
         </div>
 
