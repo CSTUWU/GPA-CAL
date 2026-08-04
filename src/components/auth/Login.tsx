@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { ArrowRight, Calculator } from "lucide-react";
+import { BrandLogo, FormError, AuthSubmitButton, AuthInput, AUTH_TAGLINE } from "./shared";
 
 export default function Login() {
   const [formData, setFormData] = useState({
@@ -33,7 +34,7 @@ export default function Login() {
   if (submitted) {
     return (
       <div className="w-full max-w-[440px] bg-white border border-slate-200/80 rounded-2xl p-10 text-center shadow-lg flex flex-col items-center justify-center min-h-[460px]">
-        <div className="w-14 h-14 bg-[#eeebff] text-primary rounded-full flex items-center justify-center mb-6">
+        <div className="w-14 h-14 bg-primary-soft text-primary rounded-full flex items-center justify-center mb-6">
           <Calculator size={28} strokeWidth={2.5} />
         </div>
         <h2 className="font-heading font-extrabold text-2xl text-slate-900 mb-3">Welcome Back!</h2>
@@ -54,13 +55,8 @@ export default function Login() {
     <div className="w-full max-w-[440px] flex flex-col items-center">
       {/* Brand Header */}
       <div className="flex flex-col items-center mb-8 text-center">
-        <div className="flex items-center gap-2 font-heading font-extrabold text-xl text-primary mb-2">
-          <div className="w-8 h-8 rounded-lg bg-[#eeebff] text-primary flex items-center justify-center">
-            <Calculator size={18} strokeWidth={2.5} />
-          </div>
-          <span>UniMate</span>
-        </div>
-        <p className="text-xs text-slate-400 font-medium">Precision in Academic Excellence</p>
+        <BrandLogo size={18} className="text-xl mb-2" />
+        <p className="text-xs text-slate-400 font-medium">{AUTH_TAGLINE}</p>
       </div>
 
       {/* Login Card */}
@@ -76,13 +72,12 @@ export default function Login() {
           {/* Institutional Email */}
           <div>
             <label className="block text-xs font-semibold text-slate-500 mb-2">Institutional Email</label>
-            <input
+            <AuthInput
               type="email"
               name="email"
               value={formData.email}
               onChange={handleChange}
               placeholder="e.g. s.jobs@university.edu"
-              className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-lg text-slate-800 text-sm placeholder-slate-400 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
               required
             />
           </div>
@@ -95,13 +90,12 @@ export default function Login() {
                 Forgot Password?
               </a>
             </div>
-            <input
+            <AuthInput
               type="password"
               name="password"
               value={formData.password}
               onChange={handleChange}
               placeholder="••••••••"
-              className="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-lg text-slate-800 text-sm placeholder-slate-400 focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-all"
               required
             />
           </div>
@@ -122,20 +116,13 @@ export default function Login() {
           </div>
 
           {/* Error Message */}
-          {error && (
-            <div className="p-3 bg-rose-50 border border-rose-100 rounded-lg text-rose-600 text-xs font-semibold text-center">
-              {error}
-            </div>
-          )}
+          {error && <FormError message={error} />}
 
           {/* Submit Button */}
-          <button
-            type="submit"
-            className="w-full bg-primary text-white font-semibold text-sm py-3 px-4 rounded-lg hover:bg-primary-hover flex items-center justify-center gap-2 shadow-md shadow-primary/20 hover:shadow-lg transition-all duration-200 cursor-pointer mt-4"
-          >
+          <AuthSubmitButton>
             <span>Log In</span>
             <ArrowRight size={15} strokeWidth={2.5} />
-          </button>
+          </AuthSubmitButton>
         </form>
       </div>
 

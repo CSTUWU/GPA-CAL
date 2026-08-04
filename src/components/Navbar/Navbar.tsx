@@ -1,96 +1,83 @@
-import { useState } from "react";
-import { GraduationCap, Menu, X } from "lucide-react";
-import { Link } from "react-router-dom";
+import CustomSelect from "../UI/CustomSelect";
+import type { SelectOption } from "../UI/CustomSelect";
+import { RefreshCw, RotateCcw } from "lucide-react";
+import type { TsvSyncState, DegreeProgram } from "../../types/gpa";
+import Button from "../UI/Button";
 
-export default function Navbar() {
-  const [isOpen, setIsOpen] = useState(false);
+interface NavbarProps {
+  tsvState: TsvSyncState;
+  onOpenSyncModal: () => void;
+  onSelectDegreeProgram: (d: DegreeProgram) => void;
+  onResetAll: () => void;
+}
+
+export default function Navbar({ tsvState, onOpenSyncModal, onSelectDegreeProgram, onResetAll }: NavbarProps) {
+  const subjectLabel = `${tsvState.courseCount} subject${tsvState.courseCount === 1 ? "" : "s"}`;
+  const degreeOptions: SelectOption[] = (tsvState.availableDegrees || []).map((d) => {
+    const isActive = d.id === tsvState.activeDegree?.id;
+    return {
+      value: d.id,
+      label: `${d.code} · ${d.name}`,
+      sub: isActive
+        ? subjectLabel
+        : `${d.code}${d.years ? ` · ${d.years} yr${d.years > 1 ? "s" : ""}` : ""}`,
+    };
+  });
+  /* Always show the currently loaded sheet (even custom TSV URLs) so its live subject count is visible */
+  const active = tsvState.activeDegree;
+  if (active && !degreeOptions.some((o) => o.value === active.id)) {
+    degreeOptions.unshift({ value: active.id, label: `${active.code} · ${active.name}`, sub: subjectLabel });
+  }
 
   return (
-    <nav className="sticky top-0 z-50 h-18 border-b border-slate-200 bg-white/90 backdrop-blur-md flex items-center">
-      <div className="max-w-7xl mx-auto px-6 w-full flex items-center justify-between">
-        <a href="/" className="flex items-center gap-2 font-heading font-extrabold text-xl text-slate-900 transition-opacity hover:opacity-90">
-          <GraduationCap size={28} strokeWidth={2.2} className="text-primary" />
-          <span>UniMate</span>
-        </a>
-
-        {/* Navigation Links (Desktop) */}
-        <div className="hidden md:flex items-center gap-7">
-          <a href="#features" className="text-sm font-medium text-slate-600 hover:text-primary transition-colors duration-200">
-            Features
-          </a>
-          <a href="#calculators" className="text-sm font-medium text-slate-600 hover:text-primary transition-colors duration-200">
-            Calculators
-          </a>
-          <a href="#institutions" className="text-sm font-medium text-slate-600 hover:text-primary transition-colors duration-200">
-            Institutions
-          </a>
-          <a href="#about" className="text-sm font-medium text-slate-600 hover:text-primary transition-colors duration-200">
-            About
-          </a>
-        </div>
-
-        {/* Action Buttons (Desktop) */}
-        <div className="hidden md:flex items-center gap-4">
-          <Link to="/login" className="text-slate-600 hover:text-slate-900 font-semibold text-sm px-4 py-2 transition-colors duration-200 cursor-pointer">
-            Log In
-          </Link>
-          <Link to="/register" className="bg-primary text-white font-semibold text-sm px-5 py-2.5 rounded-lg hover:bg-primary-hover hover:-translate-y-px hover:shadow-md hover:shadow-primary/25 active:translate-y-0 active:shadow-sm transition-all duration-200 cursor-pointer text-center">
-            Get Started
-          </Link>
-        </div>
-
-        {/* Hamburger Menu Toggle (Mobile) */}
-        <button 
-          className="md:hidden text-slate-900 p-2 focus:outline-none cursor-pointer" 
-          onClick={() => setIsOpen(!isOpen)}
-          aria-label="Toggle navigation menu"
-        >
-          {isOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
+    <header className="app-header" style={{ paddingLeft: 16 }}>
+      {/* Degree selector */}
+      <div style={{ display: "flex", alignItems: "center", gap: 8, flex: "0 0 auto" }}>
+        <span style={{ fontSize: 12, color: "var(--gray-400)", flexShrink: 0 }}>Programme</span>
+        {degreeOptions.length > 0 && (
+          <CustomSelect
+            id="header-degree"
+            options={degreeOptions}
+            value={tsvState.activeDegree?.id || ""}
+            onChange={(val) => {
+              const d = tsvState.availableDegrees?.find((x) => x.id === val);
+              if (d) onSelectDegreeProgram(d);
+            }}
+            triggerStyle={{ minWidth: 200, maxWidth: 260, fontSize: 13, fontWeight: 600 }}
+          />
+        )}
       </div>
 
-      {/* Mobile Drawer Overlay */}
-      {isOpen && (
-        <div className="absolute top-18 left-0 w-full bg-white border-b border-slate-200 p-6 shadow-lg flex flex-col gap-5 z-40 md:hidden">
-          <a 
-            href="#features" 
-            className="text-sm font-medium text-slate-600 hover:text-primary transition-colors duration-200" 
-            onClick={() => setIsOpen(false)}
-          >
-            Features
-          </a>
-          <a 
-            href="#calculators" 
-            className="text-sm font-medium text-slate-600 hover:text-primary transition-colors duration-200" 
-            onClick={() => setIsOpen(false)}
-          >
-            Calculators
-          </a>
-          <a 
-            href="#institutions" 
-            className="text-sm font-medium text-slate-600 hover:text-primary transition-colors duration-200" 
-            onClick={() => setIsOpen(false)}
-          >
-            Institutions
-          </a>
-          <a 
-            href="#about" 
-            className="text-sm font-medium text-slate-600 hover:text-primary transition-colors duration-200" 
-            onClick={() => setIsOpen(false)}
-          >
-            About
-          </a>
-          <hr className="border-t border-slate-200 my-1" />
-          <div className="flex flex-col gap-3">
-            <Link to="/login" className="bg-white text-slate-900 border border-slate-200 font-semibold text-sm px-5 py-2.5 rounded-lg hover:bg-slate-50 transition-all duration-200 cursor-pointer w-full text-center">
-              Log In
-            </Link>
-            <Link to="/register" className="bg-primary text-white font-semibold text-sm px-5 py-2.5 rounded-lg hover:bg-primary-hover transition-all duration-200 cursor-pointer w-full text-center">
-              Get Started
-            </Link>
-          </div>
-        </div>
-      )}
-    </nav>
+      <div style={{ flex: 1 }} />
+
+      {/* Live status pill */}
+      <div
+        style={{
+          display: "flex", alignItems: "center", gap: 6, padding: "4px 12px",
+          borderRadius: 99, fontSize: 12, fontWeight: 500, flexShrink: 0,
+          background: tsvState.isLoading ? "var(--blue-bg)" : "var(--green-bg)",
+          color: tsvState.isLoading ? "var(--blue)" : "var(--green)",
+          border: `1px solid ${tsvState.isLoading ? "var(--blue-border)" : "var(--green-border)"}`,
+        }}
+      >
+        {tsvState.isLoading
+          ? <RefreshCw size={11} className="animate-spin" />
+          : <span style={{ position: "relative", display: "inline-flex", width: 7, height: 7 }}>
+              <span className="animate-ping" style={{ position: "absolute", inset: 0, borderRadius: "50%", background: "var(--green)", opacity: 0.5 }} />
+              <span style={{ position: "relative", width: 7, height: 7, borderRadius: "50%", background: "var(--green)", display: "block" }} />
+            </span>}
+        {tsvState.isLoading ? "Syncing…" : `${tsvState.courseCount} subjects`}
+      </div>
+
+      {/* Sync button */}
+      <Button variant="outline" size="sm" onClick={onOpenSyncModal}>
+        <RefreshCw size={12} className={tsvState.isLoading ? "animate-spin" : ""} /> Sync Subjects
+      </Button>
+
+      {/* Reset */}
+      <Button variant="danger-outline" size="sm" onClick={onResetAll} style={{ marginRight: 4 }} title="Reset all grades">
+        <RotateCcw size={12} /> Reset
+      </Button>
+    </header>
   );
 }
