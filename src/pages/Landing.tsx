@@ -13,6 +13,7 @@ import OnboardingWizard from "../components/Onboarding/OnboardingWizard";
 import type { OnboardingResult } from "../components/Onboarding/OnboardingWizard";
 import type { Course, TsvSyncState, DegreeProgram } from "../types/gpa";
 import { calculateOverallGpa, calculateCombinedCgpa } from "../utils/gpaCalculator";
+import { downloadGpaCsv } from "../utils/csvExporter";
 import { nextSemester, getSemesters } from "../utils/semesterUtils";
 import {
   DEFAULT_GOOGLE_SHEET_TSV_URL,
@@ -254,13 +255,6 @@ export default function Landing() {
     setCustomCourses(customCourses.map((c) => ({ ...c, grade: "Pending" })));
   };
 
-  const exportData = () => {
-    const a = document.createElement("a");
-    a.href = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify({ timestamp: new Date().toISOString(), activeDegree: tsvState.activeDegree, summary: stats, courses }, null, 2));
-    a.download = `gpa_${tsvState.activeDegree?.code || "export"}_${new Date().toISOString().slice(0, 10)}.json`;
-    document.body.appendChild(a); a.click(); a.remove();
-  };
-
   /* ── Derived ── */
   const stats        = calculateOverallGpa(courses);
   const isPriorEnabled = priorGpa.enabled;
@@ -274,6 +268,17 @@ export default function Landing() {
   const lastSem      = semesters[semesters.length - 1] ?? 1;
   const canAddSem    = !maxSemester || nextSemester(lastSem) <= maxSemester;
   const openAdd   = (sem?: number) => { setEditing(null); setDefSem(sem || semesters[0] || 1); setCourseOpen(true); };
+
+  const exportData = () => {
+    downloadGpaCsv({
+      courses,
+      stats,
+      degree: tsvState.activeDegree,
+      priorGpa,
+      combinedCgpa,
+      combinedEarned,
+    });
+  };
 
   const tsvState: TsvSyncState = {
     url: tsvUrl ?? "",
