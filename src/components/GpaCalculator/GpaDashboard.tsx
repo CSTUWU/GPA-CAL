@@ -164,7 +164,7 @@ export default function GpaDashboard({
 
       {/* ── Actions ── */}
       <Button variant="outline" fullWidth onClick={onExportData} style={{ padding: "9px 0" }}>
-        <Download size={14} /> Export JSON Summary
+        <Download size={14} /> Export CSV Summary
       </Button>
     </div>
   );
